@@ -21,7 +21,7 @@ numbersBtn.forEach(function(btn){
     });
 }) 
 
-// TODO: Print numbers to screen
+// Print numbers to screen
 function printNumber(value){
     console.log(value);
     // gets the current value displayed. It should always be zero on the first loop.
@@ -33,7 +33,9 @@ function printNumber(value){
         } else if (currentDisplay !=="0") {
             currentDisplay += value;
         };
-    };        
+
+    };  
+          
     screenDisplay.value = currentDisplay;   
 }
 
@@ -47,9 +49,15 @@ operatorsBtn.forEach(function(btn){
 })
 
 function addOperators(operator){   
+   
     numberArray.push(parseInt(currentDisplay));
     numberArray.push(operator);
     resetDisplay();
+    if (numberArray.length > 3){
+        let maths = operations(numberArray[1], numberArray[0], numberArray[2])
+        console.log("Current Answer:" + maths);
+        numberArray.splice(0, 3, maths);
+    }
     console.log(numberArray);
 }
 
@@ -69,11 +77,95 @@ function clearMemory(){
 function calculation(){
     
     numberArray.push(parseInt(currentDisplay));
-   
-    numberArray.forEach(function(number){
-        console.log(numberArray);
-    })
+
+    currentDisplay = operations(numberArray[1], numberArray[0], numberArray[2])
+    console.log("Current Answer:" + currentDisplay);
+    numberArray.splice(0, 3, currentDisplay);
+    numberArray = new Array();
+    screenDisplay.value = currentDisplay;
+           
     
-    console.log(numberArray)
-    resetDisplay();
 }
+
+
+
+function operations(operator, number1, number2){
+    switch (operator){
+        case "*":
+            return number1 * number2;
+        case "/":
+            return number1 / number2;
+        case "+":
+            return number1 + number2;
+        case "-":
+            return number1 - number2;
+    }
+}
+
+
+// Code for a scientific calculator that follows the operations order */+-
+/*
+for (let i = (numberArray.length - 1); i > 0; i--){
+    
+        if (numberArray[i] === "*"){
+            console.log("for loop:" + i);
+       
+            console.log(i + 1);
+            let removedMultiply = numberArray.splice(i - 1, 3);
+            console.log(removedMultiply);
+            let multiply = removedMultiply[0] * removedMultiply[2];
+            console.log(multiply);
+            numberArray.splice((i - 1), 0, multiply);
+            console.log(numberArray);
+        }
+    }
+    
+    for (let i = (numberArray.length - 1); i > 0; i--){
+        
+        if (numberArray[i] === "/"){
+            console.log("for loop:" + i);
+       
+            console.log(i + 1);
+            let removedMultiply = numberArray.splice(i - 1, 3);
+            console.log(removedMultiply);
+            if (removedMultiply[2] === 0){
+                console.log("To Infinity and beyond.")
+                removedMultiply[2] = 1;
+            }
+            let multiply = removedMultiply[0] / removedMultiply[2];
+            console.log(multiply);
+            numberArray.splice((i - 1), 0, multiply);
+            console.log(numberArray);
+        }
+    }
+    
+    for (let i = (numberArray.length - 1); i > 0; i--){
+        
+        if (numberArray[i] === "+"){
+            console.log("for loop:" + i);
+       
+            console.log(i + 1);
+            let removedMultiply = numberArray.splice(i - 1, 3);
+            console.log(removedMultiply);
+            let multiply = removedMultiply[0] + removedMultiply[2];
+            console.log(multiply);
+            numberArray.splice((i - 1), 0, multiply);
+            console.log(numberArray);
+        }
+    }
+    
+    for (let i = (numberArray.length - 1); i > 0; i--){
+        
+        if (numberArray[i] === "-"){
+            console.log("for loop:" + i);
+       
+            console.log(i + 1);
+            let removedMultiply = numberArray.splice(i - 1, 3);
+            console.log(removedMultiply);
+            let multiply = removedMultiply[0] - removedMultiply[2];
+            console.log(multiply);
+            numberArray.splice((i - 1), 0, multiply);
+            console.log(numberArray);
+        }
+    }
+*/
