@@ -1,5 +1,4 @@
 const screenDisplay = document.querySelector(".calculatorDisplay");
-const oneBtn = document.querySelector("#one");
 
 const resetBtn = document.querySelector("#clear");
 resetBtn.onclick = clearMemory;
@@ -7,11 +6,10 @@ resetBtn.onclick = clearMemory;
 const equalsBtn = document.querySelector("#equals");
 equalsBtn.onclick = calculation;
 
-//const plusBtn = document.querySelector("#plus");
-//plusBtn.onclick = addBtnClick;
 
 let numberArray = new Array();
 let currentDisplay = "0";
+
 // register all the button clicks
 const numbersBtn = document.querySelectorAll(".numberButton");
 
@@ -21,26 +19,25 @@ numbersBtn.forEach(function(btn){
     });
 }) 
 
-// Print numbers to screen
+// Block code to print the number to the calculator screen starts here
 function printNumber(value){
-    console.log(value);
     // gets the current value displayed. It should always be zero on the first loop.
     currentDisplay = screenDisplay.value;
     
     if (currentDisplay.length < 10) {
+        // Makes is so that numbers cant start with 0
         if (currentDisplay === "0" && value !== "0"){
                 currentDisplay = value;                       
         } else if (currentDisplay !=="0") {
             currentDisplay += value;
         };
+    };    
 
-    };  
-          
     screenDisplay.value = currentDisplay;   
 }
 
+// Block code for Operator buttons starts here
 const operatorsBtn = document.querySelectorAll(".operator");
-console.log(operatorsBtn);
 
 operatorsBtn.forEach(function(btn){
     btn.addEventListener("click", function(){
@@ -48,9 +45,10 @@ operatorsBtn.forEach(function(btn){
     })
 })
 
+// Function that runs when the operator buttons( */+-) are click
 function addOperators(operator){   
    
-    numberArray.push(parseInt(currentDisplay));
+    numberArray.push(parseFloat(currentDisplay));
     numberArray.push(operator);
     resetDisplay();
     if (numberArray.length > 3){
@@ -74,21 +72,18 @@ function clearMemory(){
     numberArray = new Array();
 }
 
-function calculation(){
-    
-    numberArray.push(parseInt(currentDisplay));
+// function that runs when the = button is pressed
+function calculation(){    
+    numberArray.push(parseFloat(currentDisplay));
 
     currentDisplay = operations(numberArray[1], numberArray[0], numberArray[2])
     console.log("Current Answer:" + currentDisplay);
     numberArray.splice(0, 3, currentDisplay);
     numberArray = new Array();
-    screenDisplay.value = currentDisplay;
-           
-    
+    screenDisplay.value = currentDisplay;    
 }
 
-
-
+// Do all of the operations
 function operations(operator, number1, number2){
     switch (operator){
         case "*":
